@@ -1,6 +1,6 @@
 require 'json'
 
-def lambda_handler(event:, context:)
+def handler(event:, context:)
     
     stores_list = {
       "stores": [
@@ -36,5 +36,5 @@ def lambda_handler(event:, context:)
         }
       ]
     }
-    { statusCode: 200, body: JSON.generate("#{stores_list.to_json}") }
+    { statusCode: 200, body: JSON.generate(stores_list) }
 end
