@@ -2,14 +2,14 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Outputs the store list
 Resources:
-  TimeFunction:
+  StoresFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
-        MyTimeApi:
+        StoresAPI:
           Type: Api
           Properties:
             Path: /stores
