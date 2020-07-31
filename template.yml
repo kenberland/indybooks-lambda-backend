@@ -14,9 +14,11 @@ Resources:
       Handler: index.handler
       Runtime: ruby2.7
       CodeUri: ./
+      Cors: "'*'"
       Events:
         StoresAPI:
           Type: Api
           Properties:
             Path: /stores
             Method: GET
+            
