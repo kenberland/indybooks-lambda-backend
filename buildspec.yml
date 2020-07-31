@@ -12,8 +12,6 @@ phases:
     commands:
       - echo post build ran at `date`
 artifacts:
-  type: zip
   files:
     - template.yml
     - outputtemplate.yml
-    - thisfiledoesnotexist.foo
