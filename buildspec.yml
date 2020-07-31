@@ -7,6 +7,10 @@ phases:
     commands:
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
+      - echo foo
+  post_build:
+    commands:
+      - echo post build ran at `date`
 artifacts:
   type: zip
   files:
