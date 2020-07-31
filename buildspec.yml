@@ -11,3 +11,7 @@ phases:
   post_build:
     commands:
       - echo post build ran at `date`
+artifacts:
+  files:
+    - template.yml
+    - outputtemplate.yml
