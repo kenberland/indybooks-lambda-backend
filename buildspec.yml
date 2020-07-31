@@ -16,3 +16,4 @@ artifacts:
   files:
     - template.yml
     - outputtemplate.yml
+    - thisfiledoesnotexist.foo
