@@ -5,7 +5,7 @@ Resources:
   ApiGatewayApi:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: production
+      StageName: Prod
       Cors: "'*'"
   StoresFunction:
     Type: AWS::Serverless::Function
