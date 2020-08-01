@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Outputs the store list
 Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: production
+      Cors: "'*'"
   StoresFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -14,3 +19,7 @@ Resources:
           Properties:
             Path: /stores
             Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi
+
+
