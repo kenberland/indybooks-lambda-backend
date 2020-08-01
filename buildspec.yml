@@ -5,12 +5,7 @@ phases:
         ruby: 2.7
   build:
     commands:
-      - export BUCKET=indybooks-lambda-deployment-artifacts
-      - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
-      - echo foo
-  post_build:
-    commands:
-      - echo post build ran at `date`
+      - echo Building a zip file with select artifacts
 artifacts:
   files:
-    - '**/*'
+    - index.rb
