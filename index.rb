@@ -1,7 +1,13 @@
 require 'json'
+load 'git_commit_sha.rb'
 
 def handler(event:, context:)
     
+    headers_list = {
+        "Access-Control-Allow-Origin": "*",
+        'Indybooks-git-commit-sha': $my_git_commit_sha
+    }
+
     stores_list = {
       "stores": [
         {
@@ -36,5 +42,5 @@ def handler(event:, context:)
         }
       ]
     }
-    return(stores_list)
+  { statusCode: 200, headers: headers_list, body: "#{stores_list.to_json}" }
 end
