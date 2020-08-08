@@ -3,15 +3,26 @@ phases:
   install:
     runtime-versions:
         ruby: 2.7
+  pre_build:
+    commands:
+      - gem install rspec
+      - gem install rspec_junit_formatter
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - rspec rspec/ --format RspecJunitFormatter --out out/$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
   post_build:
     commands:
       - echo post build ran at `date`
+reports:
+    rspec_reports:
+        files:
+            - $CODEBUILD_RESOLVED_SOURCE_VERSION
+        base-directory: out
+        file-format: JunitXml
 artifacts:
   files:
     - '**/*'
