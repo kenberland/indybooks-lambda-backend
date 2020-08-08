@@ -9,10 +9,8 @@ phases:
       - gem install rspec_junit_formatter
   build:
     commands:
-      - pwd
-      - find
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - rspec rspec/ --format RspecJunitFormatter --out out/$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - rspec spec/ --format RspecJunitFormatter --out out/$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
