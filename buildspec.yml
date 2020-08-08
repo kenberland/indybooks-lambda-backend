@@ -5,11 +5,10 @@ phases:
         ruby: 2.7
   build:
     commands:
-      - env
-      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
-      - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
   post_build:
     commands:
       - echo post build ran at `date`
