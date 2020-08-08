@@ -1,3 +1,9 @@
+To run tests
+
+```
+rspec -fd spec/
+```
+
 To start the local server
 ```
 ruby server.rb
