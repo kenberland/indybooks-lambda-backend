@@ -7,8 +7,7 @@ phases:
     commands:
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
-      - export MY_SHA=$(git rev-parse HEAD)
-      - echo "\$my_git_commit_sha = '$MY_SHA'" > git_commit_sha.rb
+      - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
   post_build:
     commands:
       - echo post build ran at `date`
