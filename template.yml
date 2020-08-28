@@ -10,6 +10,9 @@ Resources:
   StoresFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
       Handler: index.handler
       Runtime: ruby2.7
       CodeUri: ./
@@ -24,6 +27,9 @@ Resources:
   OffersFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
       Handler: offers/index.offers_handler
       Runtime: ruby2.7
       CodeUri: ./
