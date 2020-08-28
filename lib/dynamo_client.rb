@@ -10,7 +10,7 @@
 # Output: Aws::DynamoDB::Client
 require 'dynamodb_geo'
 require 'dynamodb_offer_manager'
-require 'pry'
+#require 'pry'
 
 raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
                                           ENV['AWS_SECRET_ACCESS_KEY'].nil? ||
