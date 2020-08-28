@@ -12,17 +12,22 @@ require 'dynamodb_geo'
 require 'dynamodb_offer_manager'
 #require 'pry'
 
-raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
-                                          ENV['AWS_SECRET_ACCESS_KEY'].nil? ||
-                                          ENV['AWS_ACCESS_KEY_ID'].empty? ||
-                                          ENV['AWS_SECRET_ACCESS_KEY'].empty?
-
-
-$offer_manager = DynamodbOfferManager.new(
-  endpoint: 'http://localhost:8000',
+options = {
   region: ENV['AWS_REGION'],
   table_name: 'indybooks_inventory_production'
-)
+}
+
+if ENV['INDY_ENV'] == 'development'
+  raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
+                                            ENV['AWS_SECRET_ACCESS_KEY'].nil? ||
+                                            ENV['AWS_ACCESS_KEY_ID'].empty? ||
+                                            ENV['AWS_SECRET_ACCESS_KEY'].empty?
+  options[:endpoint] = 'http://localhost:8000'
+end
+
+$offer_manager = DynamodbOfferManager.new(options) unless
+  ENV['INDY_ENV'] == 'test'
+
 #puts manager.table
 #puts manager.query('9780520081987')
 #binding.pry; 1
