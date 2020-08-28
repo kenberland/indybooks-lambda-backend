@@ -13,7 +13,6 @@ phases:
       - rspec spec/ --format RspecJunitFormatter --out out/report.xml
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
       - export BUCKET=indybooks-lambda-deployment-artifacts
-      - bundle install --path vendor/bundle
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
   post_build:
     commands:
