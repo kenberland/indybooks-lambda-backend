@@ -3,7 +3,7 @@ load 'git_commit_sha.rb'
 load 'lib/dynamodb_offer_manager.rb'
 load 'lib/dynamo_client.rb'
 
-def handler(event:, context:)
+def offers_handler(event:, context:)
 
   # Our template builds with SAM which does not currently support Lambda
   # integration only lambda proxy. Cors is not supported in API Gateway for this
@@ -19,37 +19,18 @@ def handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  offers_list = {
-    "offers": [
-                {"ask"=>0.761e1,
-                 "vendor_uuid"=>"637b5f84-5dfb-4754-acf0-c0fc5b7d7fa0",
-                 "delivery_promise"=>"curbside-pickup",
-                 "isbn"=>"9780520081987"
-                },
-                {
-                  "ask"=>0.1034e2,
-                  "vendor_uuid"=>"879539b7-39cf-4167-ac75-9e644e7e9060",
-                  "delivery_promise"=>"curbside-pickup",
-                  "isbn"=>"9780520081987"
-                },
-                {
-                  "ask"=>0.681e1,
-                  "vendor_uuid"=>"b8000330-ccff-4df7-850e-a71e498382aa",
-                  "delivery_promise"=>"curbside-pickup",
-                  "isbn"=>"9780520081987"
-                },
-                {
-                  "ask"=>0.1232e2,
-                  "vendor_uuid"=>"d9007490-a64f-4506-a181-a330c7b4a009",
-                  "delivery_promise"=>"curbside-pickup",
-                  "isbn"=>"9780520081987"
-                }
-              ]
-  }
+  offers = $offer_manager.query('9780520081987')
+  offers.items.each do |item|
+    item.transform_values! do |value|
+      value.class == BigDecimal ? value.to_f : value
+    end
+  end
 
+  ret = {}
+  ret[:offers] = offers.items
   return { statusCode: 200,
            headers: headers_list,
-           body: "#{offers_list.to_json}"
+           body: ret.to_json
   }
 
 end

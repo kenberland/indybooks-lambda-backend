@@ -24,7 +24,7 @@ Resources:
   OffersFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: offers/index.handler
+      Handler: offers/index.offers_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:

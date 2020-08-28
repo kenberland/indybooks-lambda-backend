@@ -6,6 +6,7 @@ $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 require 'sinatra'
 require 'stores'
 require 'offers'
+require 'offers/index'
 require 'index'
 
 helpers Stores
