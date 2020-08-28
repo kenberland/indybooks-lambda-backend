@@ -8,7 +8,7 @@
 #         secret_access_key => String
 #         profile_name      => 'default'
 # Output: Aws::DynamoDB::Client
-require 'dynamodb_geo'
+#require 'dynamodb_geo'
 require 'dynamodb_offer_manager'
 #require 'pry'
 

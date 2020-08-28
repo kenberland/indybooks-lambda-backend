@@ -7,7 +7,6 @@ phases:
     commands:
       - gem install rspec
       - gem install rspec_junit_formatter
-      - gem install dynamodb_geo
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
