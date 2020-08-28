@@ -21,5 +21,19 @@ Resources:
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
+  OffersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: offers/index.handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /offers
+            Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi
 
 

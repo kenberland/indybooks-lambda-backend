@@ -9,6 +9,7 @@
 #         profile_name      => 'default'
 # Output: Aws::DynamoDB::Client
 require 'dynamodb_geo'
+require 'dynamodb_offer_manager'
 require 'pry'
 
 raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
@@ -16,27 +17,13 @@ raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
                                           ENV['AWS_ACCESS_KEY_ID'].empty? ||
                                           ENV['AWS_SECRET_ACCESS_KEY'].empty?
 
-my_options = {
+
+$offer_manager = DynamodbOfferManager.new(
   endpoint: 'http://localhost:8000',
   region: ENV['AWS_REGION'],
-  table_name: "indybooks_production"
-}
-
-foo = DynamodbGeo.new(my_options)
-my_store_hash = {
-  latitude: 37.8651098,
-  longitude: -122.2573473,
-  address: '2509 Telegraph Ave',
-  city: 'Berkeley',
-  state: 'CA',
-  zip: 94704,
-  area_code: 925,
-  phone: 2589076,
-  name: 'Sleepy Cat Books'
-}
-
-
-my_store = Store.new(my_store_hash)
-foo.put_store(my_store)
-binding.pry;1
+  table_name: 'indybooks_inventory_production'
+)
+#puts manager.table
+#puts manager.query('9780520081987')
+#binding.pry; 1
 
