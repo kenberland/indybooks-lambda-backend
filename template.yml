@@ -27,15 +27,12 @@ Resources:
   OffersFunction:
     Type: AWS::Serverless::Function
     Properties:
-      KmsKeyArn: arn:aws:kms:us-east-2:308748601361:key/3df80061-c419-4d42-a565-3af4b223e684
       Environment:
         Variables:
           INDY_ENV: production
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_inventory_production
-        - KMSDecryptPolicy:
-            KeyId: arn:aws:kms:us-east-2:308748601361:key/3df80061-c419-4d42-a565-3af4b223e684
       Handler: offers/index.offers_handler
       Runtime: ruby2.7
       CodeUri: ./
