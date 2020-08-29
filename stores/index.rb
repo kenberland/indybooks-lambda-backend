@@ -1,9 +1,8 @@
 require 'json'
 load 'git_commit_sha.rb'
-load 'lib/dynamodb_offer_manager.rb'
 load 'lib/dynamo_client.rb'
 
-def handler(event:, context:)
+def stores_handler(event:, context:)
 
   # Our template builds with SAM which does not currently support Lambda
   # integration only lambda proxy. Cors is not supported in API Gateway for this

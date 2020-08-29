@@ -1,3 +1,7 @@
+require 'mock_dynamodb_offer_manager'
+require 'dynamodb_offer_manager'
+
+
 INDY_ENV = ENV['INDY_ENV']
 
 options = {
@@ -5,7 +9,7 @@ options = {
   table_name: "indybooks_inventory_#{ENV['INDY_ENV']}"
 }
 
-if ENV['INDY_ENV'] == 'development'
+if INDY_ENV == 'development'
   raise "Oh gosh I can't talk to the db" if ENV['AWS_ACCESS_KEY_ID'].nil? ||
                                             ENV['AWS_SECRET_ACCESS_KEY'].nil? ||
                                             ENV['AWS_ACCESS_KEY_ID'].empty? ||
@@ -13,9 +17,8 @@ if ENV['INDY_ENV'] == 'development'
   options[:endpoint] = 'http://localhost:8000'
 end
 
-$offer_manager = DynamodbOfferManager.new(options)
-
-#puts manager.table
-#puts manager.query('9780520081987')
-#binding.pry; 1
-
+if INDY_ENV == 'test'
+  $offer_manager = MockDynamodbOfferManager.new(options)
+else
+  $offer_manager = DynamodbOfferManager.new(options)
+end

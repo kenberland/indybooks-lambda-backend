@@ -1,6 +1,5 @@
 require 'json'
 load 'git_commit_sha.rb'
-load 'lib/dynamodb_offer_manager.rb'
 load 'lib/dynamo_client.rb'
 
 def offers_handler(event:, context:)

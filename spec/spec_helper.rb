@@ -1,3 +1,5 @@
+ENV['INDY_ENV'] = 'test'
+
 Bundler.require(:default, 'test')
 
 root = File.expand_path("..", File.dirname(__FILE__))

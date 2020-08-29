@@ -1,11 +1,16 @@
 load 'spec_helper.rb'
-require 'stores/index'
+require 'offers/index'
 
-RSpec.describe '#lambda index' do
+RSpec.describe '#offers_index' do
   context 'lambda_result' do
 
     before(:all) do
-      @lamda_result = stores_handler(event: '', context: '')
+      event = {
+        'pathParameters' => {
+          'proxy' =>  "isbn/12345/vendors/98,88"
+        }
+      }
+      @lamda_result = offers_handler(event: event, context: '')
     end
 
     it 'returns a well-formed response for Lambda' do
@@ -25,11 +30,11 @@ RSpec.describe '#lambda index' do
     end
 
     it 'body has stores key' do
-      expect(JSON.parse(@lamda_result[:body]).keys).to include 'stores'
+      expect(JSON.parse(@lamda_result[:body]).keys).to include 'offers'
     end
 
     it 'stores has some stores' do
-      expect(JSON.parse(@lamda_result[:body])['stores'].size).to be > 0
+      expect(JSON.parse(@lamda_result[:body])['offers'].size).to be > 0
     end
   end
 end

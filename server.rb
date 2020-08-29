@@ -19,7 +19,7 @@ end
 get '/offers/isbn/*/vendors/*' do
   event = {
     'pathParameters' => {
-      'proxy' =>  "isbn/#{params[:splat][0]}/vendors/isbn/#{params[:splat][1]}"
+      'proxy' =>  "isbn/#{params[:splat][0]}/vendors/#{params[:splat][1]}"
     }
   }
   offers(event)
