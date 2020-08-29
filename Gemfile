@@ -4,10 +4,16 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-group :development do
-  gem 'aws-sdk-dynamodb'
-  gem 'pry'
+group :test do
   gem 'rspec'
+end
+
+group :test, :development do
+  gem 'aws-sdk-dynamodb'
+end
+
+group :development do
+  gem 'pry'
   gem 'sinatra'
   #gem 'dynamodb_geo', git:'https://github.com/JA-Soonahn/dynamodb_geo'
   #gem 'dynamodb_geo'

@@ -1,13 +1,15 @@
 version: 0.2
+env:
+  variables:
+    INDY_ENV: test
 phases:
   install:
     runtime-versions:
         ruby: 2.7
   pre_build:
     commands:
-      - gem install rspec
-      - gem install rspec_junit_formatter
-      - gem install aws-sdk-dynamodb
+      - gem install bundler
+      - bundle install --without development
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
