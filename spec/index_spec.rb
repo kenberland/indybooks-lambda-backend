@@ -1,7 +1,5 @@
-root = File.expand_path("..", File.dirname(__FILE__))
-$LOAD_PATH.unshift(root) unless $LOAD_PATH.include?(root)
-
-require 'index'
+load 'spec_helper.rb'
+require 'stores/index'
 
 RSpec.describe '#lambda index' do
   context 'lambda_result' do

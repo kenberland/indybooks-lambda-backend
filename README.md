@@ -1,3 +1,16 @@
+Uses rvm. To declare bankruptcy:
+```
+rvm gemset delete $(cat .ruby-gemset )
+cd ..
+cd lambda-pipeline-repo/
+bundle
+rspec -fd spec/
+```
+
+To develop
+
+`export INDY_ENV=development`
+
 To run tests
 
 ```
@@ -6,7 +19,7 @@ rspec -fd spec/
 
 To start the local server
 ```
-INDY_ENV=development ruby server.rb
+ruby server.rb
 ```
 
 Then `curl http://localhost:4567/stores`
