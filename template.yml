@@ -13,7 +13,7 @@ Resources:
       Environment:
         Variables:
           INDY_ENV: production
-      Handler: index.handler
+      Handler: stores/index.handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:

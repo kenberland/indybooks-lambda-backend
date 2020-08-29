@@ -6,12 +6,7 @@ rspec -fd spec/
 
 To start the local server
 ```
-ruby server.rb
-```
-
-or
-```
-AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
+INDY_ENV=development ruby server.rb
 ```
 
 Then `curl http://localhost:4567/stores`
