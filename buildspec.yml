@@ -11,11 +11,10 @@ phases:
       - gem install bundler
       - bundle config set without development
       - bundle install
-      - bundle exec rspec
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - rspec spec/ --format RspecJunitFormatter --out out/report.xml
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
