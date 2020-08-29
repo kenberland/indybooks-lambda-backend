@@ -40,7 +40,7 @@ Resources:
         StoresAPI:
           Type: Api
           Properties:
-            Path: /offers
+            Path: /offers/{proxy+}
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
