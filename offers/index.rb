@@ -19,7 +19,8 @@ def offers_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  offers = $offer_manager.query('9780520081987')
+  isbn = JSON.parse(event)['pathParameters']['proxy'].split('/')[1]
+  offers = $offer_manager.query(isbn)
   offers.items.each do |item|
     item.transform_values! do |value|
       value.class == BigDecimal ? value.to_f : value

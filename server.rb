@@ -16,6 +16,11 @@ get '/stores' do
   stores_index(params['name'])
 end
 
-get '/offers' do
-  offers
+get '/offers/isbn/*/vendors/*' do
+  event = {
+    pathParameters: {
+      proxy: "isbn/#{params[:splat][0]}/vendors/isbn/#{params[:splat][1]}"
+    }
+  }
+  offers(JSON.pretty_generate(event))
 end
