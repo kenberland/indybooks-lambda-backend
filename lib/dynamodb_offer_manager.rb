@@ -3,15 +3,16 @@ require 'aws-sdk-dynamodb'
 class DynamodbOfferManager
   attr_accessor :client, :table_name
   def initialize(region:, table_name:, access_key_id: nil,
-                 secret_access_key: nil, profile_name: 'default', endpoint: nil)
+                 secret_access_key: nil,
+                 session_token: nil,
+                 profile_name: 'default', endpoint: nil)
     if access_key_id.nil? && secret_access_key.nil?
       access_key_id = ENV['AWS_ACCESS_KEY_ID']
       secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-
-      credentials = Aws::SharedCredentials.new(profile_name: profile_name).credentials if access_key_id.nil? && secret_access_key.nil?
     end
-    credentials = Aws::Credentials.new(access_key_id, secret_access_key)
-
+    credentials = Aws::Credentials.new(access_key_id,
+                                       secret_access_key,
+                                       ENV['AWS_SESSION_TOKEN'])
     @table_name      = table_name
 
     if endpoint
