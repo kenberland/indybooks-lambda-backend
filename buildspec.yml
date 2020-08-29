@@ -9,7 +9,8 @@ phases:
   pre_build:
     commands:
       - gem install bundler
-      - bundle install --without development
+      - bundle config set without development
+      - bundle
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
