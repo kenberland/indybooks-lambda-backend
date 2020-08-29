@@ -10,7 +10,7 @@ phases:
     commands:
       - gem install bundler
       - bundle config set without development
-      - bundle
+      - bundle exec rspec
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
