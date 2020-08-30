@@ -1,5 +1,5 @@
-require 'mock_dynamodb_offer_manager'
-require 'dynamodb_offer_manager'
+require 'lib/mock_dynamodb_offer_manager'
+require 'lib/dynamodb_offer_manager'
 
 
 INDY_ENV = ENV['INDY_ENV']
