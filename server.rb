@@ -15,7 +15,7 @@ helpers Offers
 get '/stores/lat/*/long/*' do
   event = {
     'pathParameters' => {
-      'proxy' =>  "stores/lat/#{params[:splat][0]}/long/#{params[:splat][1]}"
+      'proxy' =>  "lat/#{params[:splat][0]}/long/#{params[:splat][1]}"
     }
   }
   stores(event)

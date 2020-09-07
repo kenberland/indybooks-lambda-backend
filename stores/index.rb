@@ -18,8 +18,8 @@ def stores_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  lat = event['pathParameters']['proxy'].split('/')[2]
-  long = event['pathParameters']['proxy'].split('/')[4]
+  lat = event['pathParameters']['proxy'].split('/')[1]
+  long = event['pathParameters']['proxy'].split('/')[3]
 
   ret = {}
 
