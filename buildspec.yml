@@ -10,7 +10,7 @@ phases:
     commands:
       - gem install bundler
       - bundle config set without development
-      - bundle install
+      - bundle install --path vendor/bundle
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
