@@ -13,6 +13,9 @@ Resources:
       Environment:
         Variables:
           INDY_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: indybooks_stores_production
       Handler: stores/index.stores_handler
       Runtime: ruby2.7
       CodeUri: ./
