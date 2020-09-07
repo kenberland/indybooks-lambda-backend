@@ -1,11 +1,16 @@
 load 'spec_helper.rb'
 require 'stores/index'
 
-RSpec.describe '#lambda index' do
+RSpec.describe '#stores_index' do
   context 'lambda_result' do
 
     before(:all) do
-      @lamda_result = stores_handler(event: '', context: '')
+      event = {
+        'pathParameters' => {
+          'proxy' =>  "lat/35/long/-122"
+        }
+      }
+      @lamda_result = stores_handler(event: event, context: '')
     end
 
     it 'returns a well-formed response for Lambda' do

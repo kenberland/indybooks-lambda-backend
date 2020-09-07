@@ -7,13 +7,18 @@ require 'sinatra'
 require 'stores'
 require 'offers'
 require 'offers/index'
-require 'index'
+require 'stores/index'
 
 helpers Stores
 helpers Offers
 
-get '/stores' do
-  stores_index(params['name'])
+get '/stores/lat/*/long/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "stores/lat/#{params[:splat][0]}/long/#{params[:splat][1]}"
+    }
+  }
+  stores(event)
 end
 
 get '/offers/isbn/*/vendors/*' do

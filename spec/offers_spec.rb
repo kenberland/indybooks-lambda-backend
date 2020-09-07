@@ -29,11 +29,11 @@ RSpec.describe '#offers_index' do
       expect(JSON.parse(@lamda_result[:body]).class).to eq Hash
     end
 
-    it 'body has stores key' do
+    it 'body has offers key' do
       expect(JSON.parse(@lamda_result[:body]).keys).to include 'offers'
     end
 
-    it 'stores has some stores' do
+    it 'offers has some offers' do
       expect(JSON.parse(@lamda_result[:body])['offers'].size).to be > 0
     end
   end

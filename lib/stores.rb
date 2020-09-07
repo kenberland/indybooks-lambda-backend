@@ -1,6 +1,6 @@
 module Stores
-  def stores_index(name)
-    lamda_result = handler(event: '', context: '')
+  def stores(event)
+    lamda_result = stores_handler(event: event, context: '')
     [
       lamda_result[:statusCode],
       lamda_result[:headers],
