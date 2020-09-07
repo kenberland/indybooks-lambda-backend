@@ -33,7 +33,9 @@ end
 class Store
   def to_h
     temp = instance_variables.map do |v|
-      Hash[v.to_s.sub('@','').to_sym, self.send(v.to_s.sub('@',''))]
+      value = self.send(v.to_s.sub('@',''))
+      value = value.class == BigDecimal ? value.to_f : value
+      Hash[v.to_s.sub('@','').to_sym, value]
     end
     Hash[*temp.collect{|h| h.to_a}.flatten]
   end
