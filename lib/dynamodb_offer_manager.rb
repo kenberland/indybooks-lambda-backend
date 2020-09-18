@@ -30,15 +30,19 @@ class DynamodbOfferManager
   end
 
   def query(isbn)
-    client.query(
-      {
-        table_name: @table_name,
-        key_condition_expression: "isbn = :isbn",
-        expression_attribute_values: {
-          ":isbn" => isbn
+    begin
+      client.query(
+        {
+          table_name: @table_name,
+          key_condition_expression: "isbn = :isbn",
+          expression_attribute_values: {
+            ":isbn" => isbn
+          }
         }
-      }
-    )
+      )
+    rescue
+      raise "Could not query #{@table_name}"
+    end
   end
 
 end
