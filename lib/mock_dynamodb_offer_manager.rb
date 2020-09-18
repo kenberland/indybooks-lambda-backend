@@ -42,7 +42,7 @@ class MockDynamodbOfferManager
     }
   end
 
-  def query(isbn)
+  def query(isbn, vendor)
     MockDynamoResults.new(
       [
         {
