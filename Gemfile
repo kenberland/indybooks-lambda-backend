@@ -14,7 +14,7 @@ group :test, :development do
 end
 
 group :development do
-  gem 'pry'
+  gem 'pry-byebug'
   gem 'sinatra'
   #gem 'dynamodb_geo', git:'https://github.com/JA-Soonahn/dynamodb_geo'
   #gem 'dynamodb_geo'

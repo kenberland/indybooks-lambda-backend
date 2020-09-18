@@ -1,4 +1,5 @@
 require 'aws-sdk-dynamodb'
+#require 'pry'
 
 class DynamodbOfferManager
   attr_accessor :client, :table_name
@@ -29,14 +30,16 @@ class DynamodbOfferManager
     end
   end
 
-  def query(isbn)
+  def query(isbn, vendor_uuid)
     begin
+#      binding.pry;1
       client.query(
         {
           table_name: @table_name,
-          key_condition_expression: "isbn = :isbn",
+          :key_condition_expression => "isbn = :isbn and vendor_uuid = :vendor_uuid",
           expression_attribute_values: {
-            ":isbn" => isbn
+            ":isbn" => isbn,
+            ":vendor_uuid" => vendor_uuid
           }
         }
       )
