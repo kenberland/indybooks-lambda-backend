@@ -36,5 +36,9 @@ RSpec.describe '#stores_index' do
     it 'stores has some stores' do
       expect(JSON.parse(@lamda_result[:body])['stores'].size).to be > 0
     end
+
+    it 'stores have uuids' do
+      expect(JSON.parse(@lamda_result[:body])['stores'][0]['uuid'].size).to eq 36
+    end
   end
 end

@@ -1,4 +1,5 @@
 Uses rvm.
+See the unified local DDB thingy at https://github.com/kenberland/indybooks/blob/master/ddb-local/README.md
 
 ### To declare bankruptcy:
 ```
@@ -27,11 +28,6 @@ ruby server.rb
 ```
 
 Then `curl http://localhost:4567/stores`
-
-### To run local dynamodb:
-```
-docker run -t -i --rm --network host amazon/dynamodb-local
-```
 
 ### TODO:
 
