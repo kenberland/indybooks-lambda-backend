@@ -29,14 +29,3 @@ else
   $offer_manager = DynamodbOfferManager.new(**offer_options)
   $store_manager = DynamodbManager.new(**store_options)
 end
-
-class Store
-  def to_h
-    temp = instance_variables.map do |v|
-      value = self.send(v.to_s.sub('@',''))
-      value = value.class == BigDecimal ? value.to_f : value
-      Hash[v.to_s.sub('@','').to_sym, value]
-    end
-    Hash[*temp.collect{|h| h.to_a}.flatten]
-  end
-end

@@ -1,4 +1,3 @@
-#require 'aws-sdk-dynamodb'
 #require 'pry'
 
 class DynamodbOfferManager
