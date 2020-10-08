@@ -55,3 +55,5 @@ docker run -t -i --rm --network host amazon/dynamodb-local
   # For errors see: https://aws.amazon.com/premiumsupport/knowledge-center/malformed-502-api-gateway/
   # https://indybooks-developer-pastes.s3.us-east-2.amazonaws.com/2020-08-01-10-46-20.png
 
+
+cats
