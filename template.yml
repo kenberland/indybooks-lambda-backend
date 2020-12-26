@@ -67,5 +67,25 @@ Resources:
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
+  PurchasesPostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: indybooks_purchases_production
+      Handler: purchases_post/index.purchases_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /purchases
+            Method: PUT
+            RestApiId:
+              Ref: ApiGatewayApi
 
 

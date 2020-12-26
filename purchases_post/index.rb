@@ -1,5 +1,6 @@
 require 'json'
 load 'git_commit_sha.rb'
+load 'lib/dynamo_client.rb'
 
 def purchases_post_handler(event:, context:)
 
