@@ -1,4 +1,5 @@
 Uses rvm.
+
 See the unified local DDB thingy at https://github.com/kenberland/indybooks/blob/master/ddb-local/README.md
 
 ### To declare bankruptcy:
@@ -13,8 +14,15 @@ rspec -fd spec/
 ### To develop:
 ```
 export INDY_ENV=development
+AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
 ```
 
+## supports pry
+```ruby
+require 'pry'
+...
+binding.pry;1
+```
 
 ### To run tests:
 

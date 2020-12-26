@@ -7,6 +7,7 @@ gem 'dynamodb_geo'
 group :test do
   gem 'rspec'
   gem 'rspec_junit_formatter'
+  gem 'json-schema'
 end
 
 group :test, :development do
@@ -16,6 +17,7 @@ end
 group :development do
   gem 'pry-byebug'
   gem 'sinatra'
+  gem 'rake'
   #gem 'dynamodb_geo', git:'https://github.com/JA-Soonahn/dynamodb_geo'
   #gem 'dynamodb_geo'
 end
