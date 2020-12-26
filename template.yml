@@ -56,7 +56,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_purchases_production
-      Handler: purchasess/index.offers_handler
+      Handler: purchases/index.purchases_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
