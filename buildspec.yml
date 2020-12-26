@@ -5,7 +5,7 @@ env:
 phases:
   install:
     runtime-versions:
-        ruby: 2.7.1
+        ruby: 2.7
   pre_build:
     commands:
       - gem install bundler
