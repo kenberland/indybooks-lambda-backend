@@ -9,7 +9,7 @@ def purchases_post_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  post_body = event['pathParameters']['post_body']
+  post_body = event['body']
 
   payload = JSON.parse(post_body, object_class: OpenStruct)
   $purchase_manager.put(payload.purchase)

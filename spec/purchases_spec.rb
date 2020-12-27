@@ -35,7 +35,7 @@ purchases_schema = {
   }
 }
 
-RSpec.describe '#purchase_index' do
+RSpec.describe '#purchases_get' do
   context 'lambda_result' do
 
     before(:all) do
