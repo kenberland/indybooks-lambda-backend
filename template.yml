@@ -84,7 +84,7 @@ Resources:
           Type: Api
           Properties:
             Path: /purchases
-            Method: PUT
+            Method: POST
             RestApiId:
               Ref: ApiGatewayApi
 
