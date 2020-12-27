@@ -12,7 +12,11 @@ def purchases_post_handler(event:, context:)
   post_body = event['pathParameters']['post_body']
 
   payload = JSON.parse(post_body, object_class: OpenStruct)
-  ret = $purchase_manager.put(payload.purchase)
+  $purchase_manager.put(payload.purchase)
+
+  ret = {
+    "status": "success"
+  }
 
   return { statusCode: 200,
            headers: headers_list,
