@@ -7,6 +7,12 @@ Resources:
     Properties:
       StageName: Prod
       Cors: "'*'"
+      Auth:
+        Authorizers:
+          MyCognitoAuth:
+            UserPoolArn: arn:aws:cognito-idp:us-east-2:308748601361:userpool/us-east-2_WKijNuDww
+            Identity:
+              Header: Authorization
   StoresFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -85,6 +91,26 @@ Resources:
           Properties:
             Path: /purchases
             Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+      Handler: auth/test.test_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        AuthTestFunctionAPI:
+          Type: Api
+          Properties:
+            Path: /auth/test
+            Method: GET
+            Auth:
+               Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
 
