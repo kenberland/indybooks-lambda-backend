@@ -5,7 +5,7 @@ def test_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
-    "Access-Control-Allow-Headers" => "*",
+    "Access-Control-Allow-Headers" => "Authorization",
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
