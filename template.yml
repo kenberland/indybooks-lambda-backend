@@ -96,18 +96,18 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
-  AuthTestFunction:
+  AuthMyStoresFunction:
     Type: AWS::Serverless::Function
     Properties:
       Environment:
         Variables:
           INDY_ENV: production
       Policies:
-      Handler: auth/my/stores.handler
+      Handler: auth/my/stores/index.auth_my_stores_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
-        AuthTestFunctionAPI:
+        StoresAPI:
           Type: Api
           Properties:
             Path: /auth/my/stores

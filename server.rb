@@ -3,6 +3,8 @@ $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
+require 'auth/my/stores'
+require 'auth/my/stores/index'
 require 'offers'
 require 'offers/index'
 require 'purchases'
@@ -17,6 +19,7 @@ helpers Stores
 helpers Offers
 helpers Purchases
 helpers PurchasesPost
+helpers AuthMyStores
 
 get '/stores/lat/*/long/*' do
   event = {
@@ -52,4 +55,17 @@ get '/purchases/customer_uuid/*' do
     }
   }
   purchases(event)
+end
+
+get '/auth/my/stores' do
+  event = {
+    'requestContext' => {
+      'authorizer' => {
+        'claims' => {
+          'cognito:username' => ENV['INDY_AUTH_USERNAME']
+        }
+      }
+    }
+  }
+  auth_my_stores(event)
 end
