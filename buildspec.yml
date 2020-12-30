@@ -8,9 +8,12 @@ phases:
         ruby: 2.7
   pre_build:
     commands:
+      - rbenv versions
+      - rbenv version
       - gem install bundler
       - bundle config set without development
-      - bundle install --path vendor/bundle
+      - bundle config set path vendor/bundle
+      - bundle install
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
