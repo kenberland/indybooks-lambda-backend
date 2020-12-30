@@ -77,7 +77,7 @@ end
 get '/auth/inventory/store/*/isbn/*' do
   event = {
     'pathParameters' => {
-      'proxy' =>  "inventory/store/#{params[:splat][0]}/isbn/#{params[:splat][1]}"
+      'proxy' =>  "store/#{params[:splat][0]}/isbn/#{params[:splat][1]}"
     },
     'requestContext' => {
       'authorizer' => {
