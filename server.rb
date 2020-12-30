@@ -5,6 +5,8 @@ $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'auth/my/stores'
 require 'auth/my/stores/index'
+require 'auth/inventory/store/isbn'
+require 'auth/inventory/store/isbn/index'
 require 'offers'
 require 'offers/index'
 require 'purchases'
@@ -20,6 +22,8 @@ helpers Offers
 helpers Purchases
 helpers PurchasesPost
 helpers AuthMyStores
+helpers AuthInventoryStoreIsbn
+
 
 get '/stores/lat/*/long/*' do
   event = {
@@ -68,4 +72,20 @@ get '/auth/my/stores' do
     }
   }
   auth_my_stores(event)
+end
+
+get '/auth/inventory/store/*/isbn/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "inventory/store/#{params[:splat][0]}/isbn/#{params[:splat][1]}"
+    },
+    'requestContext' => {
+      'authorizer' => {
+        'claims' => {
+          'cognito:username' => ENV['INDY_AUTH_USERNAME']
+        }
+      }
+    }
+  }
+  auth_inventory_store_isbn(event)
 end
