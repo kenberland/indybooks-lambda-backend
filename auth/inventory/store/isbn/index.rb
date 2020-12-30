@@ -6,8 +6,8 @@ def auth_inventory_store_isbn_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  store_uuid = event['pathParameters']['proxy'].split('/')[2]
-  isbn = event['pathParameters']['proxy'].split('/')[4]
+  store_uuid = event['pathParameters']['proxy'].split('/')[1]
+  isbn = event['pathParameters']['proxy'].split('/')[3]
 
   inventory = {
     "book": {
