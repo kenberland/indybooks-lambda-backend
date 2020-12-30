@@ -1,5 +1,5 @@
 require 'json'
-require 'user_stores_map'
+require 'lib/user_stores_map'
 
 def auth_my_stores_handler(event:, context:)
   headers_list = {
