@@ -60,4 +60,3 @@ Then `curl http://localhost:4567/stores`
   # https://indybooks-developer-pastes.s3.us-east-2.amazonaws.com/2020-08-01-10-46-20.png
 
 
-cats
