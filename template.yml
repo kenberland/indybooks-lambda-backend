@@ -100,14 +100,14 @@ Resources:
         Variables:
           INDY_ENV: production
       Policies:
-      Handler: auth/test.test_handler
+      Handler: auth/my/stores.handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
         AuthTestFunctionAPI:
           Type: Api
           Properties:
-            Path: /auth/test
+            Path: /auth/my/stores
             Method: GET
             Auth:
                Authorizer: MyCognitoAuth
