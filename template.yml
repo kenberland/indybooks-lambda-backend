@@ -1,4 +1,4 @@
-B1;5202;0cAWSTemplateFormatVersion: '2010-09-09'
+B1;5202;0cB1;5202;0cAWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: REST API for the Indybooks backend
 Resources:
@@ -116,7 +116,7 @@ Resources:
                Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
-  AuthInventoryStoreIsbnTest:
+  AuthInventoryStoreIsbnTest2:
     Type: AWS::Serverless::Function
     Properties:
       Environment:
