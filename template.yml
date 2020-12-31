@@ -124,6 +124,8 @@ Resources:
           INDY_ENV: production
           ISBN_SECRET: '{{resolve:secretsmanager:com.isbndb.api2.auth.v2:SecretString:secret}}'
       Policies:
+        - DynamoDBReadPolicy:
+            TableName: indybooks_inventory_production
       Handler: auth/inventory/store/isbn/index.auth_inventory_store_isbn_handler
       Runtime: ruby2.7
       CodeUri: ./
