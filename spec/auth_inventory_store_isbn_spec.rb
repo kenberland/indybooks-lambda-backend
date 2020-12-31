@@ -91,7 +91,7 @@ unauthorized_schema = {
   }
 }
 
-RSpec.describe '#auth_my_stores_get' do
+RSpec.describe '#auth_inventory_store_isbn' do
   context 'lambda_result' do
 
     describe 'the Lambda proxy' do
@@ -185,7 +185,7 @@ RSpec.describe '#auth_my_stores_get' do
         ).to eq []
       end
 
-      it 'returns an "unauthorized" message' do
+      it 'returns a "network error" message' do
         expect(
           JSON.parse(@lamda_result[:body])["errorMessage"]
         ).to eq ISBNDB_NETWORK_ERROR_STR
@@ -212,7 +212,6 @@ RSpec.describe '#auth_my_stores_get' do
 
 
       it 'json validates' do
-#        puts JSON.pretty_generate(JSON.parse(@lamda_result[:body]))
         expect(
           JSON::Validator.fully_validate(no_book_schema,
                                          JSON.parse(@lamda_result[:body]),
@@ -276,6 +275,13 @@ RSpec.describe '#auth_my_stores_get' do
                                           )
           ).to eq []
         end
+
+        it 'quantity is greater zero' do
+          expect(
+            JSON.parse(@lamda_result[:body])['quantity']
+          ).to be > 0
+        end
+
       end
     end
   end
