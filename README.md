@@ -13,7 +13,7 @@ rspec -fd spec/
 
 ### To develop:
 ```
-INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
+ISBN_SECRET=$(gpg -d creds/ISBN_SECRET.txt.gpg) INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
 ```
 
 ## supports pry
