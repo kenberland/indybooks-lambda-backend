@@ -1,4 +1,7 @@
 require 'json'
+require 'git_commit_sha.rb'
+require 'lib/dynamo_client.rb'
+#require 'pry'
 
 def auth_inventory_store_isbn_handler(event:, context:)
   headers_list = {
@@ -6,19 +9,21 @@ def auth_inventory_store_isbn_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  store_uuid = event['pathParameters']['proxy'].split('/')[1]
+  vendor_uuid = event['pathParameters']['proxy'].split('/')[1]
   isbn = event['pathParameters']['proxy'].split('/')[3]
 
   book_json = isbn_http_get(isbn)
   book = JSON.parse(book_json)
 
-  inventory = book.dup
-#              "store_uuid": store_uuid,
-#              "asking price": "$8.13",
-#             "delivery promise": "24HD",
-#             "quantity on hand": 2,
+  ddb = $offer_manager.query(isbn, vendor_uuid)
 
-  { statusCode: 200, headers: headers_list, body: inventory.to_json }
+  items = ddb.items.first.transform_values! do |value|
+    value.class == BigDecimal ? value.to_f : value
+  end
+
+  book.merge!(items)
+
+  { statusCode: 200, headers: headers_list, body: book.to_json }
 end
 
 
