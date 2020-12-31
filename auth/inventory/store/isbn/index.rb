@@ -23,7 +23,7 @@ def auth_inventory_store_isbn_handler(event:, context:)
 end
 
 
-def isbn_http_get isbn
+def isbn_http_get(isbn)
   require 'net/http'
   uri = URI("https://api2.isbndb.com/book/#{isbn}")
   req = Net::HTTP::Get.new(uri)
