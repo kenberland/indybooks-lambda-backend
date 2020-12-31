@@ -160,7 +160,37 @@ RSpec.describe '#auth_my_stores_get' do
       end
     end
 
-    # when times out
+    describe 'when there is a isbn netork issue' do
+      before(:each) do
+        isbn = "%013d" % Integer(rand*10**13)
+        store_uuid = SecureRandom.uuid
+        event = {
+          'pathParameters' => {
+            'proxy' =>  "store/#{store_uuid}/isbn/#{isbn}"
+          }
+        }
+
+        stub_request(:get, "#{ISBNDB_URL}/#{isbn}").
+          to_timeout
+
+        @lamda_result = auth_inventory_store_isbn_handler(event: event, context: '')
+      end
+
+      it 'json validates' do
+        expect(
+          JSON::Validator.fully_validate(unauthorized_schema,
+                                         JSON.parse(@lamda_result[:body]),
+                                         :strict => true
+                                        )
+        ).to eq []
+      end
+
+      it 'returns an "unauthorized" message' do
+        expect(
+          JSON.parse(@lamda_result[:body])["errorMessage"]
+        ).to eq ISBNDB_NETWORK_ERROR_STR
+      end
+    end
 
     describe 'when isbndb doesnt have the book' do
       before(:each) do
