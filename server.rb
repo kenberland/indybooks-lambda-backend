@@ -78,13 +78,6 @@ get '/auth/inventory/store/*/isbn/*' do
   event = {
     'pathParameters' => {
       'proxy' =>  "store/#{params[:splat][0]}/isbn/#{params[:splat][1]}"
-    },
-    'requestContext' => {
-      'authorizer' => {
-        'claims' => {
-          'cognito:username' => ENV['INDY_AUTH_USERNAME']
-        }
-      }
     }
   }
   auth_inventory_store_isbn(event)
