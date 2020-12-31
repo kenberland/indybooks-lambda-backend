@@ -1,5 +1,4 @@
 require 'json'
-require 'pry'
 
 def auth_inventory_store_isbn_handler(event:, context:)
   headers_list = {
