@@ -1,4 +1,5 @@
 require 'json'
+require 'pry'
 
 def auth_inventory_store_isbn_handler(event:, context:)
   headers_list = {
@@ -9,23 +10,27 @@ def auth_inventory_store_isbn_handler(event:, context:)
   store_uuid = event['pathParameters']['proxy'].split('/')[1]
   isbn = event['pathParameters']['proxy'].split('/')[3]
 
-  inventory = {
-    "book": {
-              "store_uuid": store_uuid,
-              "asking price": "$8.13",
-             "delivery promise": "24HD",
-             "quantity on hand": 2,
-             "publisher": "Modern Library",
-             "image": "https://images.isbndb.com/covers/07/15/9780812970715.jpg",
-             "authors": [
-                          "Pepys, Samuel"
-                        ],
-             "title": "The Diary of Samuel Pepys (Modern Library Classics)",
-             "isbn": isbn,
-             "msrp": "18",
-             "binding": "Paperback",
-             "publish_date": "2003-09-09T00:00:01Z",
-            }
-  }
+  book_json = isbn_http_get(isbn)
+  book = JSON.parse(book_json)
+
+  inventory = book.dup
+#              "store_uuid": store_uuid,
+#              "asking price": "$8.13",
+#             "delivery promise": "24HD",
+#             "quantity on hand": 2,
+
   { statusCode: 200, headers: headers_list, body: inventory.to_json }
+end
+
+
+def isbn_http_get isbn
+  require 'net/http'
+  uri = URI("https://api2.isbndb.com/book/#{isbn}")
+  req = Net::HTTP::Get.new(uri)
+  req['Authorization'] = '44900_f3d9d272dc11249cb7928da98b67a438'
+  response = Net::HTTP.start(uri.host, uri.port,
+                             :use_ssl => uri.scheme == 'https') {|http|
+    http.request(req)
+  }
+  response.body
 end
