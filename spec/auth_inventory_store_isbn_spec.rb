@@ -43,6 +43,25 @@ inventory_schema = {
   }
 }
 
+no_book_schema = {
+  "type" => "object",
+  "required" => ["errorType", "errorMessage", "trace", "quantity"],
+  "properties" => {
+    "errorType" => {
+      "type" => "string"
+    },
+    "errorMessage" => {
+      "type" => "string"
+    },
+    "trace" => {
+      "type" => "array"
+    },
+    "quantity" => {
+      "type" => "number"
+    }
+  }
+}
+
 RSpec.describe '#auth_my_stores_get' do
   context 'lambda_result' do
 
@@ -80,9 +99,38 @@ RSpec.describe '#auth_my_stores_get' do
       end
     end
 
-    # when they don't have the book
     # when not authorized
     # when times out
+
+    describe 'when isbndb doesnt have the book' do
+      before(:each) do
+        isbn = "%013d" % Integer(rand*10**13)
+        store_uuid = SecureRandom.uuid
+        event = {
+          'pathParameters' => {
+            'proxy' =>  "store/#{store_uuid}/isbn/#{isbn}"
+          }
+        }
+
+        stub_request(:get, "#{ISBNDB_URL}/#{isbn}").
+          to_return(status: 200, body: File.read('spec/mocks/not-found.json'))
+
+        $offer_manager.has_results = false
+
+        @lamda_result = auth_inventory_store_isbn_handler(event: event, context: '')
+      end
+
+
+      it 'json validates' do
+#        puts JSON.pretty_generate(JSON.parse(@lamda_result[:body]))
+        expect(
+          JSON::Validator.fully_validate(no_book_schema,
+                                         JSON.parse(@lamda_result[:body]),
+                                         :strict => true
+                                        )
+        ).to eq []
+      end
+    end
 
     describe 'when isbndb has the book' do
       before(:each) do
@@ -106,7 +154,7 @@ RSpec.describe '#auth_my_stores_get' do
           $offer_manager.has_results = false
         end
 
-        it 'body is well formed' do
+        it 'json validates' do
 #          puts JSON.pretty_generate(JSON.parse(@lamda_result[:body]))
           expect(
             JSON::Validator.fully_validate(no_inventory_schema,
@@ -129,7 +177,7 @@ RSpec.describe '#auth_my_stores_get' do
           $offer_manager.has_results = true
         end
 
-        it 'body is well formed' do
+        it 'json validates' do
 #          puts JSON.pretty_generate(JSON.parse(@lamda_result[:body]))
           expect(
             JSON::Validator.fully_validate(inventory_schema,

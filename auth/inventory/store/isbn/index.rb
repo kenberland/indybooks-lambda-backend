@@ -17,6 +17,9 @@ def auth_inventory_store_isbn_handler(event:, context:)
 
   ddb = $offer_manager.query(isbn, vendor_uuid)
 
+#  if book["errorMessage"] == 'Not Found'
+#  end
+
   if ddb.items.empty?
     items = {
       quantity: 0
