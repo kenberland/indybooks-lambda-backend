@@ -28,7 +28,7 @@ class MockDynamodbManager
 end
 
 class MockDynamodbOfferManager
-  attr_accessor :client, :table_name
+  attr_accessor :client, :table_name, :has_results
   def initialize(region:, table_name:, access_key_id: nil,
                  secret_access_key: nil,
                  session_token: nil,
@@ -40,18 +40,27 @@ class MockDynamodbOfferManager
       region:      region,
       endpoint:    endpoint
     }
+    @has_results = true
   end
 
-  def query(isbn, vendor)
-    MockDynamoResults.new(
-      [
-        {
-          "isbn": "9780451527172",
-         "ask": 8.52,
-         "vendor_uuid": "c225442c-8457-4665-8896-3af21a64ee25",
-         "delivery_promise": "curbside-pickup"
-        }
-      ]
-    )
+  def has_results?
+    @has_results
+  end
+
+  def query(isbn, vendor_uuid)
+    if has_results?
+      MockDynamoResults.new(
+        [
+          {
+            "isbn": isbn,
+           "ask": 8.52,
+           "vendor_uuid": vendor_uuid,
+           "delivery_promise": (rand > 0.5 ? '24hHD' : '1hPU')
+          }
+        ]
+      )
+    else
+      MockDynamoResults.new([])
+    end
   end
 end

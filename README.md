@@ -28,6 +28,12 @@ binding.pry;1
 ```
 rspec -fd spec/
 ```
+### To run one
+```
+rspec ./spec/controllers/groups_controller_spec.rb:42
+
+```
+
 
 ### To start the local server:
 ```
