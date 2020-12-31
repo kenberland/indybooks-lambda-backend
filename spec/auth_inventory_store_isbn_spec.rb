@@ -22,9 +22,6 @@ inventory_schema = {
     "book" => {
       "type" => "object"
     },
-    "isbn" => {
-      "type" => "string"
-    },
     "vendor_uuid" => {
       "type" => "uuid"
     },
@@ -55,6 +52,38 @@ no_book_schema = {
     },
     "trace" => {
       "type" => "array"
+    },
+    "quantity" => {
+      "type" => "number"
+    }
+  }
+}
+
+unauthorized_schema = {
+  "type" => "object",
+  "required" => ["errorType", "errorMessage", "trace", "isbn", "ask",
+                 "vendor_uuid", "delivery_promise", "quantity"],
+  "properties" => {
+    "errorType" => {
+      "type" => "string"
+    },
+    "errorMessage" => {
+      "type" => "string"
+    },
+    "trace" => {
+      "type" => "array"
+    },
+    "vendor_uuid" => {
+      "type" => "uuid"
+    },
+    "isbn" => {
+      "type" => "string"
+    },
+    "ask" => {
+      "type" => "number"
+    },
+    "delivery_promise" => {
+      "type" => "string"
     },
     "quantity" => {
       "type" => "number"
@@ -99,7 +128,38 @@ RSpec.describe '#auth_my_stores_get' do
       end
     end
 
-    # when not authorized
+    describe 'when we dont have isbn credentials' do
+      before(:each) do
+        isbn = "%013d" % Integer(rand*10**13)
+        store_uuid = SecureRandom.uuid
+        event = {
+          'pathParameters' => {
+            'proxy' =>  "store/#{store_uuid}/isbn/#{isbn}"
+          }
+        }
+
+        stub_request(:get, "#{ISBNDB_URL}/#{isbn}").
+          to_return(status: 200, body: File.read('spec/mocks/unauthorized-message.json'))
+
+        @lamda_result = auth_inventory_store_isbn_handler(event: event, context: '')
+      end
+
+      it 'json validates' do
+        expect(
+          JSON::Validator.fully_validate(unauthorized_schema,
+                                         JSON.parse(@lamda_result[:body]),
+                                         :strict => true
+                                        )
+        ).to eq []
+      end
+
+      it 'returns an "unauthorized" message' do
+        expect(
+          JSON.parse(@lamda_result[:body])["errorMessage"]
+        ).to eq ISBNDB_CREDS_ERROR_STR
+      end
+    end
+
     # when times out
 
     describe 'when isbndb doesnt have the book' do

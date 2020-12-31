@@ -12,13 +12,12 @@ def auth_inventory_store_isbn_handler(event:, context:)
   vendor_uuid = event['pathParameters']['proxy'].split('/')[1]
   isbn = event['pathParameters']['proxy'].split('/')[3]
 
-  book_json = IsbndbClient.isbn_http_get(isbn)
-  book = JSON.parse(book_json)
+  book = IsbndbClient.isbn_http_get(isbn)
 
   ddb = $offer_manager.query(isbn, vendor_uuid)
 
 #  if book["errorMessage"] == 'Not Found'
-#  end
+  #  end
 
   if ddb.items.empty?
     items = {
