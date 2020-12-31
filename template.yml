@@ -116,7 +116,7 @@ Resources:
                Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
-  AuthInventoryStoreIsbnTestTwo:
+  AuthInventoryStoreIsbn:
     Type: AWS::Serverless::Function
     Properties:
       Environment:
