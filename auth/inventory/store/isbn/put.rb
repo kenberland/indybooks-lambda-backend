@@ -18,8 +18,6 @@ def auth_inventory_store_isbn_put_handler(event:, context:)
 
   ddb = $offer_manager.put(isbn, vendor_uuid, payload.book)
 
-  puts "PUTing vendor: #{vendor_uuid} isbn: #{isbn}, #{payload.inspect}, #{ddb.inspect}"
-
   { statusCode: 200, headers: headers_list, body: ddb.to_json }
 end
 
