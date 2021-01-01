@@ -1,6 +1,12 @@
 require 'json'
 load 'git_commit_sha.rb'
 load 'lib/dynamo_client.rb'
+require 'json-schema'
+require 'schema/purchase_post'
+
+OK = 200
+BAD_REQUEST = 400
+SERVER_ERROR = 500
 
 def purchases_post_handler(event:, context:)
 
@@ -9,16 +15,21 @@ def purchases_post_handler(event:, context:)
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
 
-  post_body = event['body']
+  payload = event['body']
 
-  payload = JSON.parse(post_body, object_class: OpenStruct)
-  $purchase_manager.put(payload.purchase)
+  status = JSON::Validator.validate(PurchasePostSchema.schema, payload
+                                   ) ? OK : BAD_REQUEST
+  if status == OK
+    payload = JSON.parse(payload, object_class: OpenStruct)
+    ret_obj = $purchase_manager.put(payload.purchase)
+    status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
+  end
 
   ret = {
-    "status": "success"
+    "status": status
   }
 
-  return { statusCode: 200,
+  return { statusCode: status,
            headers: headers_list,
            body: ret.to_json
   }

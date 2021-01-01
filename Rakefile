@@ -20,7 +20,7 @@ task :create_purchases_table do
   manager = DynamodbPurchaseManager.new(**options)
   puts manager.create_table
 
-  MY_JSON = File.read('purchases/purchase.json')
+  MY_JSON = File.read('spec/mocks/purchases/valid-post.json')
   payload = JSON.parse(MY_JSON, object_class: OpenStruct)
   puts payload.purchase.inspect
   manager.put(payload.purchase)

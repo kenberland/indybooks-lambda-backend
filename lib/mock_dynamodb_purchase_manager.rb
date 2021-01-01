@@ -1,5 +1,12 @@
 require 'time'
 
+class MockDynamoSeahorse
+  attr_accessor :data
+  def initialize(data)
+    @data = data
+  end
+end
+
 class MockDynamodbPurchaseManager
   attr_accessor :client, :table_name
   def initialize(region:, table_name:, access_key_id: nil,
@@ -13,6 +20,10 @@ class MockDynamodbPurchaseManager
       region:      region,
       endpoint:    endpoint
     }
+  end
+
+  def put(p)
+    MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
   def get(customer_uuid)
