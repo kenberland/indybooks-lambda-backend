@@ -1,5 +1,3 @@
-#require 'pry'
-
 class DynamodbOfferManager
   attr_accessor :client, :table_name
   def initialize(region:, table_name:, access_key_id: nil,
@@ -29,9 +27,24 @@ class DynamodbOfferManager
     end
   end
 
+  def put(isbn, vendor_uuid, offer)
+    @client.put_item(
+      {
+        table_name: @table_name,
+        item: {
+          'vendor_uuid' => vendor_uuid,
+          'isbn'   => isbn,
+          'price'   => offer.ask,
+          'delivery_promise' => offer.delivery_promise,
+          'quantity' => offer.quantity,
+          'last_modified' => Time.now.utc.iso8601
+        }
+      }
+    )
+  end
+
   def query(isbn, vendor_uuid)
     begin
-#      binding.pry;1
       client.query(
         {
           table_name: @table_name,

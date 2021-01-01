@@ -16,9 +16,6 @@ def auth_inventory_store_isbn_handler(event:, context:)
 
   ddb = $offer_manager.query(isbn, vendor_uuid)
 
-#  if book["errorMessage"] == 'Not Found'
-  #  end
-
   if ddb.items.empty?
     items = {
       quantity: 0
@@ -27,10 +24,6 @@ def auth_inventory_store_isbn_handler(event:, context:)
     items = ddb.items.first.transform_values do |value|
       value.class == BigDecimal ? value.to_f : value
     end
-    items.merge!({
-                   quantity: 1
-                 }
-                )
   end
 
   book.merge!(items)

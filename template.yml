@@ -139,5 +139,27 @@ Resources:
                Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
+  AuthInventoryStoreIsbnPut:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: indybooks_inventory_production
+      Handler: auth/inventory/store/isbn/put.auth_inventory_store_isbn_put_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/inventory/{proxy+}
+            Method: PUT
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
 
 

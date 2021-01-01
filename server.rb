@@ -7,6 +7,7 @@ require 'auth/my/stores'
 require 'auth/my/stores/index'
 require 'auth/inventory/store/isbn'
 require 'auth/inventory/store/isbn/index'
+require 'auth/inventory/store/isbn/put'
 require 'offers'
 require 'offers/index'
 require 'purchases'
@@ -45,9 +46,7 @@ end
 
 post '/purchases' do
   event = {
-    'pathParameters' => {
-      'post_body' =>  request.body.read
-    }
+    'body' =>  request.body.read
   }
   purchases_post(event)
 end
@@ -81,4 +80,14 @@ get '/auth/inventory/store/*/isbn/*' do
     }
   }
   auth_inventory_store_isbn(event)
+end
+
+put '/auth/inventory/store/*/isbn/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "store/#{params[:splat][0]}/isbn/#{params[:splat][1]}"
+    },
+    'body' =>  request.body.read
+  }
+  auth_inventory_store_isbn_put(event)
 end
