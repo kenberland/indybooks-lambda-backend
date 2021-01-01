@@ -55,7 +55,8 @@ class MockDynamodbOfferManager
             "isbn": isbn,
            "ask": 8.52,
            "vendor_uuid": vendor_uuid,
-           "delivery_promise": (rand > 0.5 ? '24hHD' : '1hPU')
+           "delivery_promise": (rand > 0.5 ? '24hHD' : '1hPU'),
+           "quantity": (Integer(rand * 10) - 1)
           }
         ]
       )
