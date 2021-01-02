@@ -2,6 +2,8 @@ Uses rvm.
 
 See the unified local DDB thingy at https://github.com/kenberland/indybooks/blob/master/ddb-local/README.md
 
+You need a local DDB server and need to have run both indybooks:collectorz.com/books-xml2ddb.rb and indybooks:populate-stores/populate-stores.rb before you can run server.rb
+
 ### To declare bankruptcy:
 ```
 rvm gemset delete $(cat .ruby-gemset )
