@@ -1,5 +1,4 @@
 require 'json'
-#require 'pry'
 load 'git_commit_sha.rb'
 load 'lib/dynamo_client.rb'
 
@@ -13,7 +12,6 @@ def offers_handler(event:, context:)
   isbn = event['pathParameters']['proxy'].split('/')[1]
   vendors = event['pathParameters']['proxy'].split('/')[3].split(',')
 
-#  binding.pry;1
   offers = vendors.map do |vendor| # until such time as O(n) fucks us
     ddb = $offer_manager.query(isbn, vendor)
     ddb.items.each do |item|
