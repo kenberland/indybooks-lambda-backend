@@ -7,19 +7,15 @@ gem 'json-schema'
 
 
 group :test do
+  gem 'aws-sdk-dynamodb'
   gem 'rspec'
   gem 'rspec_junit_formatter'
   gem 'webmock'
 end
 
-group :test, :development do
-  gem 'aws-sdk-dynamodb'
-end
-
 group :development do
+  gem 'aws-sdk-dynamodb'
   gem 'pry-byebug'
   gem 'sinatra'
   gem 'rake'
-  #gem 'dynamodb_geo', git:'https://github.com/JA-Soonahn/dynamodb_geo'
-  #gem 'dynamodb_geo'
 end
