@@ -12,7 +12,14 @@ phases:
       - rbenv versions
       - rbenv version
       - gem install bundler
+      - bundle config set without development
+      - bundle config set path vendor/bundle
+      - bundle install
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+    finally:
+      - rm -rf vendor/bundle
       - rm -rf creds/
+      - rm -rf ~/.bundle
       - rm README.md server.rb
   build:
     commands:
@@ -26,6 +33,12 @@ phases:
     commands:
       - export BUCKET=indybooks-lambda-deployment-artifacts
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
+reports:
+    rspec_reports:
+        files:
+            - report.xml
+        base-directory: out
+        file-format: JunitXml
 artifacts:
   files:
     - '**/*'
