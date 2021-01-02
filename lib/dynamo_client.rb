@@ -1,5 +1,6 @@
 require 'lib/mock_dynamodb_offer_manager'
 require 'lib/mock_dynamodb_purchase_manager'
+require 'lib/mock_dynamodb_helpers'
 require 'lib/dynamodb_offer_manager'
 require 'lib/dynamodb_purchase_manager'
 require 'bundler'

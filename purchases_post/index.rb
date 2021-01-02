@@ -17,7 +17,8 @@ def purchases_post_handler(event:, context:)
 
   payload = event['body']
 
-  status = JSON::Validator.validate(PurchasePostSchema.schema, payload
+  status = JSON::Validator.validate(PurchasePostSchema.schema, payload,
+                                    :strict => true
                                    ) ? OK : BAD_REQUEST
   if status == OK
     payload = JSON.parse(payload, object_class: OpenStruct)

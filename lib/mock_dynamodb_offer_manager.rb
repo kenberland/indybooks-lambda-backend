@@ -1,10 +1,3 @@
-class MockDynamoResults
-  attr_accessor :items
-  def initialize(items)
-    @items = items
-  end
-end
-
 class MockDynamodbManager
   attr_accessor :client, :table_name
   def initialize(region:, table_name:, access_key_id: nil,
@@ -47,6 +40,10 @@ class MockDynamodbOfferManager
     @has_results
   end
 
+  def put(isbn, vendor_uuid, p)
+    MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
+  end
+
   def query(isbn, vendor_uuid)
     if has_results?
       MockDynamoResults.new(
@@ -56,7 +53,7 @@ class MockDynamodbOfferManager
            "ask": 8.52,
            "vendor_uuid": vendor_uuid,
            "delivery_promise": (rand > 0.5 ? '24hHD' : '1hPU'),
-           "quantity": (Integer(rand * 10) - 1)
+           "quantity": (Integer(rand * 9) + 1)
           }
         ]
       )

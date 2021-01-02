@@ -267,7 +267,6 @@ RSpec.describe '#auth_inventory_store_isbn' do
         end
 
         it 'json validates' do
-#          puts JSON.pretty_generate(JSON.parse(@lamda_result[:body]))
           expect(
             JSON::Validator.fully_validate(inventory_schema,
                                            JSON.parse(@lamda_result[:body]),
