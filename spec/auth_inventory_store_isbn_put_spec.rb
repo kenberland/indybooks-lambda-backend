@@ -2,7 +2,6 @@ load 'spec_helper.rb'
 require 'auth/inventory/store/isbn/put'
 require 'json-schema'
 require 'schema/purchase_post'
-require 'pry'
 
 RSpec.describe '#auth_inventory_store_isbn_put' do
 
