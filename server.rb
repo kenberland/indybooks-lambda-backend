@@ -5,6 +5,8 @@ $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'auth/piles_post'
 require 'auth/piles_post/index'
+require 'auth/pile/get'
+require 'auth/pile_get/index'
 require 'auth/my/stores'
 require 'auth/my/stores/index'
 require 'auth/inventory/store/isbn'
@@ -119,6 +121,22 @@ post '/auth/piles' do
     'body' =>  request.body.read
   }
   auth_piles_post(event)
+end
+
+get '/auth/pile/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  params[:splat][0]
+    },
+    'requestContext' => {
+      'authorizer' => {
+        'claims' => {
+          'cognito:username' => ENV['INDY_AUTH_USERNAME']
+        }
+      }
+    }
+  }
+  auth_pile_get(event)
 end
 
 put '/auth/pile/*' do

@@ -19,19 +19,14 @@ class MockDynamodbPileManager
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
-  def get(customer_uuid)
-    records = Integer(rand*3) + 1
+  def get(uuid)
+    return MockDynamoResults.new({}) if uuid == 'ed6b1ddd-598a-4607-b699-8cb8be91d90c'
+    isbns = Integer(rand*10) + 1
     ret = []
-    records.times do
-      ret << {
-        'customer_uuid': SecureRandom.uuid,
-              'vendor_uuid': SecureRandom.uuid,
-              'isbn': Integer(rand*10**10),
-              'price': (Integer(rand*1000)+500)/100.0, # $5 - $15.00
-              'delivery_promise': (rand > 0.5 ? '24hHD' : '1hPU'),
-              'created_at': Time.now.utc.iso8601
-      }
-    end
+    ret.push({
+              "isbn" => isbns.times.map {Integer(rand * 10**9).to_s },
+              "username" => 'indybooks'
+             })
     MockDynamoResults.new(ret)
   end
 end

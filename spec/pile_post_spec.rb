@@ -2,6 +2,7 @@ load 'spec_helper.rb'
 require 'auth/piles_post/index'
 require 'json-schema'
 require 'lib/schema/pile_post'
+require 'lib/helpers'
 
 RSpec.describe '#piles_post' do
   context 'lambda_result' do
@@ -44,7 +45,7 @@ RSpec.describe '#piles_post' do
         end
         it 'returns a uuid' do
           expect(JSON.parse(lambda_result[:body])['uuid']).
-            to match /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/
+            to match UUID_REGEX
         end
       end
 

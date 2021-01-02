@@ -36,11 +36,11 @@ class DynamodbPileManager
   def create_table_impl
     @client.create_table({
                            key_schema: [
-                             { attribute_name: 'uuid',  key_type: 'HASH' },
+                             { attribute_name: 'pile_uuid',  key_type: 'HASH' },
                              { attribute_name: 'username', key_type: 'RANGE' },
                            ],
                            attribute_definitions: [
-                             { attribute_name: 'uuid',    attribute_type: 'S' },
+                             { attribute_name: 'pile_uuid',    attribute_type: 'S' },
                              { attribute_name: 'username',   attribute_type: 'S' },
                            ],
                            provisioned_throughput: {
@@ -56,7 +56,7 @@ class DynamodbPileManager
       {
         table_name: @table_name,
         item: {
-          'uuid' => p.uuid,
+          'pile_uuid' => p.uuid,
           'username' => p.username,
           'isbn_list' => p.isbn,
           'created_at' => Time.now.utc.iso8601
@@ -65,13 +65,13 @@ class DynamodbPileManager
     )
   end
 
-  def get(customer_uuid)
+  def get(pile_uuid) ##uid is a reserved word
     client.query(
       {
         table_name: @table_name,
-        key_condition_expression: "customer_uuid = :customer_uuid",
+        key_condition_expression: "pile_uuid = :pile_uuid",
         expression_attribute_values: {
-          ":customer_uuid" => customer_uuid
+          ":pile_uuid" => pile_uuid
         }
       }
     )
