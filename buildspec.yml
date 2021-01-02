@@ -20,6 +20,7 @@ phases:
       - rm -rf vendor/bundle
       - rm -rf creds/
       - rm -rf ~/.bundle
+      - rm -rf .bundle
       - rm README.md server.rb
   build:
     commands:
