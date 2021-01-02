@@ -1,7 +1,7 @@
 load 'spec_helper.rb'
 require 'purchases_post/index'
 require 'json-schema'
-require 'schema/purchase_post'
+require 'lib/schema/purchase_post'
 
 RSpec.describe '#purchases_post' do
   context 'lambda_result' do

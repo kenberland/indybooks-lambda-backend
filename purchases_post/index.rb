@@ -2,7 +2,7 @@ require 'json'
 load 'git_commit_sha.rb'
 load 'lib/dynamo_client.rb'
 require 'json-schema'
-require 'schema/purchase_post'
+require 'lib/schema/purchase_post'
 
 OK = 200
 BAD_REQUEST = 400

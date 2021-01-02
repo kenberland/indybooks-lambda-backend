@@ -2,7 +2,7 @@ require 'json'
 require 'git_commit_sha.rb'
 require 'lib/dynamo_client.rb'
 require 'lib/isbndb_client.rb'
-require 'schema/inventory_store_isbn_put'
+require 'lib/schema/inventory_store_isbn_put'
 
 OK = 200
 BAD_REQUEST = 400
