@@ -1,12 +1,9 @@
 require 'json'
 require 'git_commit_sha.rb'
+require 'lib/helpers'
 require 'lib/dynamo_client.rb'
 require 'lib/isbndb_client.rb'
 require 'lib/schema/inventory_store_isbn_put'
-
-OK = 200
-BAD_REQUEST = 400
-SERVER_ERROR = 500
 
 def auth_inventory_store_isbn_put_handler(event:, context:)
   headers_list = {

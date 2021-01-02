@@ -2,7 +2,17 @@ Uses rvm.
 
 See the unified local DDB thingy at https://github.com/kenberland/indybooks/blob/master/ddb-local/README.md
 
-You need a local DDB server and need to have run both indybooks:collectorz.com/books-xml2ddb.rb and indybooks:populate-stores/populate-stores.rb before you can run server.rb
+You need a local DDB server in docker:
+
+```
+docker run -d -p 8000:8000 amazon/dynamodb-local
+cd $HOME/indybooks/collectorz.com
+INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar books-xml2ddb.rb
+cd $HOME/indybooks/populate-stores
+INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ./populate-stores.rb
+ISBN_SECRET=$(gpg -d creds/ISBN_SECRET.txt.gpg) INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
+```
+
 
 ### To declare bankruptcy:
 ```
