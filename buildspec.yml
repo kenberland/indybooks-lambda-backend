@@ -19,12 +19,14 @@ phases:
     finally:
       - rm -rf vendor/bundle
       - rm -rf creds/
+      - rm -rf ~/.bundle
       - rm README.md server.rb
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - bundle config set without test development
+      - bundle config set without 'test development'
       - bundle config set path vendor/bundle
+      - cat ~/.bundle/config
       - bundle install
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
   post_build:
