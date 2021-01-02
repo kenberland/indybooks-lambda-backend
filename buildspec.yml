@@ -19,7 +19,7 @@ phases:
     finally:
       - rm -rf vendor/bundle
       - rm -rf creds/
-      - rm README server.rb
+      - rm README.md server.rb
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
