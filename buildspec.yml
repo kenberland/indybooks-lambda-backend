@@ -15,16 +15,22 @@ phases:
       - bundle config set without development
       - bundle config set path vendor/bundle
       - bundle install
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+    finally:
+      - rm -rf vendor/bundle
+      - rm -rf creds/
+      - rm README server.rb
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+      - bundle config set without test development
+      - bundle config set path vendor/bundle
+      - bundle install
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
-      - export BUCKET=indybooks-lambda-deployment-artifacts
-      - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
   post_build:
     commands:
-      - echo post build ran at `date`
+      - export BUCKET=indybooks-lambda-deployment-artifacts
+      - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 reports:
     rspec_reports:
         files:
