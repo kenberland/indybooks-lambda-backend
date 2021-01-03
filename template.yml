@@ -161,5 +161,49 @@ Resources:
                Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
+  AuthPilePost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: indybooks_piles_production
+      Handler: auth/piles_post/index.piles_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/piles/{proxy+}
+            Method: POST
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthPilesGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: indybooks_piles_production
+      Handler: auth/pile/get.auth_pile_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/pile/{proxy+}
+            Method: GET
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
 
 
