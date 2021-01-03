@@ -170,6 +170,8 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: indybooks_piles_production
+        - DynamoDBWritePolicy:
+            TableName: indybooks_user_piles_production
       Handler: auth/piles_post/index.piles_post_handler
       Runtime: ruby2.7
       CodeUri: ./
@@ -201,6 +203,28 @@ Resources:
           Properties:
             Path: /auth/pile/{proxy+}
             Method: GET
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthPilesPut:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: indybooks_piles_production
+      Handler: auth/pile/put.auth_pile_put_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/pile/{proxy+}
+            Method: PUT
             Auth:
                Authorizer: MyCognitoAuth
             RestApiId:

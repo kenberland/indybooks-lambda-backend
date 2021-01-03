@@ -1,5 +1,5 @@
-module PurchasesPost
-  def auth_piles_post(event)
+module AuthPilePost
+  def auth_pile_post(event)
     lamda_result = piles_post_handler(event: event, context: '')
     [
       lamda_result[:statusCode],

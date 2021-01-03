@@ -3,25 +3,35 @@ $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
-require 'auth/inventory/store/isbn/index'
-require 'auth/inventory/store/isbn/put'
-require 'auth/my/stores/index'
-require 'auth/pile/get'
-require 'auth/piles_post/index'
-require 'offers/index'
-require 'purchases/index'
-require 'purchases_post/index'
-require 'sinatra'
-require 'sinatra_shim/auth/inventory/store/isbn'
-require 'sinatra_shim/auth/my/stores'
-require 'sinatra_shim/auth/pile_get/index'
-require 'sinatra_shim/auth/piles_post'
-require 'sinatra_shim/offers'
-require 'sinatra_shim/purchases'
-require 'sinatra_shim/purchases_post'
-require 'sinatra_shim/stores'
-require 'stores/index'
+require 'pry'
 
+require 'lambda/auth/inventory/store/isbn/get'
+require 'lambda/auth/inventory/store/isbn/put'
+require 'lambda/auth/my/stores/get'
+require 'lambda/auth/my/pile/get'
+require 'lambda/auth/pile/get'
+require 'lambda/auth/pile/post'
+require 'lambda/auth/pile/put'
+require 'lambda/offers/get'
+require 'lambda/purchases/get'
+require 'lambda/purchases/post'
+require 'lambda/stores/get'
+require 'sinatra'
+require 'sinatra_shim/auth/inventory/store/isbn/get'
+require 'sinatra_shim/auth/my/stores/get'
+require 'sinatra_shim/auth/my/pile/get'
+require 'sinatra_shim/auth/pile/get'
+require 'sinatra_shim/auth/pile/post'
+require 'sinatra_shim/auth/pile/put'
+require 'sinatra_shim/offers/get'
+require 'sinatra_shim/purchases/get'
+require 'sinatra_shim/purchases/post'
+require 'sinatra_shim/stores/get'
+
+helpers AuthPilePost
+helpers AuthPileGet
+helpers AuthPilePut
+helpers AuthMyPile
 helpers Stores
 helpers Offers
 helpers Purchases
@@ -96,7 +106,7 @@ put '/auth/inventory/store/*/isbn/*' do
   auth_inventory_store_isbn_put(event)
 end
 
-get '/auth/my/piles' do
+get '/auth/my/pile' do
   event = {
     'requestContext' => {
       'authorizer' => {
@@ -106,7 +116,7 @@ get '/auth/my/piles' do
       }
     }
   }
-  auth_my_piles(event)
+  auth_my_pile_get(event)
 end
 
 post '/auth/pile' do
@@ -120,7 +130,7 @@ post '/auth/pile' do
     },
     'body' =>  request.body.read
   }
-  auth_piles_post(event)
+  auth_pile_post(event)
 end
 
 get '/auth/pile/*' do
@@ -143,6 +153,13 @@ put '/auth/pile/*' do
   event = {
     'pathParameters' => {
       'proxy' =>  params[:splat][0]
+    },
+    'requestContext' => {
+      'authorizer' => {
+        'claims' => {
+          'cognito:username' => ENV['INDY_AUTH_USERNAME']
+        }
+      }
     },
     'body' =>  request.body.read
   }

@@ -10,6 +10,7 @@ cd $HOME/indybooks/collectorz.com
 INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar books-xml2ddb.rb
 cd $HOME/indybooks/populate-stores
 INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ./populate-stores.rb
+cd $HOME/lambda-pipeline-repo
 ISBN_SECRET=$(gpg -d creds/ISBN_SECRET.txt.gpg) INDY_ENV=development INDY_AUTH_USERNAME=indybooks AWS_REGION=us-east-2 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
 ```
 

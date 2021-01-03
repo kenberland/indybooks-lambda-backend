@@ -4,6 +4,7 @@ require 'json-schema'
 require 'lib/schema/pile_get'
 
 RSpec.describe '#pile_get' do
+
   context 'lambda_result' do
     let(:username) { 'indybooks' }
     let(:pile_uuid) { SecureRandom.uuid }
@@ -30,21 +31,7 @@ RSpec.describe '#pile_get' do
     let(:lambda_result) { auth_pile_handler(event: event, context: '') }
 
     describe 'for the get response' do
-      it 'returns a well-formed response for Lambda' do
-        expect(lambda_result.class).to eq Hash
-      end
-
-      it 'has 3 keys' do
-        expect(lambda_result.keys.size).to eq 3
-      end
-
-      it 'body is a string' do
-        expect(lambda_result[:body].class).to eq String
-      end
-
-      it 'body is a JSON string' do
-        expect(JSON.parse(lambda_result[:body]).class).to eq Hash
-      end
+      it_behaves_like 'lambda function'
     end
 
     describe 'with the right user' do
@@ -88,6 +75,10 @@ RSpec.describe '#pile_get' do
       it 'returns 403' do
         expect(lambda_result[:statusCode]).
           to eq 403
+      end
+      it 'returns no body' do
+        expect(lambda_result[:body]).
+          to eq '{}'
       end
     end
 

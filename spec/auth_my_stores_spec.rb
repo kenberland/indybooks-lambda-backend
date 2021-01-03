@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'lambda/auth/my/stores/index'
+require 'lambda/auth/my/stores/get'
 require 'json-schema'
 
 purchases_schema = {

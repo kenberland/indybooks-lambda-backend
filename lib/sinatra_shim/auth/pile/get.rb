@@ -1,4 +1,4 @@
-module PurchasesPost
+module AuthPileGet
   def auth_pile_get(event)
     lamda_result = auth_pile_handler(event: event, context: '')
     [

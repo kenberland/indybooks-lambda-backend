@@ -1,7 +1,7 @@
 load 'spec_helper.rb'
-require 'lambda/stores/index'
+require 'lambda/stores/get'
 
-RSpec.describe '#stores_index' do
+RSpec.describe '#stores_get' do
   context 'lambda_result' do
 
     before(:all) do

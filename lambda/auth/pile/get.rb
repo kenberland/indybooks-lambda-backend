@@ -27,6 +27,10 @@ def auth_pile_handler(event:, context:)
       status = OK
     else
       status = FORBIDDEN
+      return { statusCode: status,
+               headers: headers_list,
+               body: {}.to_json
+      }
     end
     ret = {
       pile: pile.items.first.merge({pile_uuid: uuid})
