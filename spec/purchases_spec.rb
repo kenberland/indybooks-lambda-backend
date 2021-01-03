@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'purchases/index'
+require 'lambda/purchases/index'
 require "json-schema"
 
 purchases_schema = {

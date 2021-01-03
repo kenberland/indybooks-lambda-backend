@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'stores/index'
+require 'lambda/stores/index'
 
 RSpec.describe '#stores_index' do
   context 'lambda_result' do

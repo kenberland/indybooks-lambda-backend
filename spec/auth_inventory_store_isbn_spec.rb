@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'auth/inventory/store/isbn/index'
+require 'lambda/auth/inventory/store/isbn/index'
 require 'json-schema'
 
 no_inventory_schema = {

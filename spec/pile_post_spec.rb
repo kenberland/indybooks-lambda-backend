@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'auth/piles_post/index'
+require 'lambda/auth/piles_post/index'
 require 'json-schema'
 require 'lib/schema/pile_post'
 require 'lib/helpers'

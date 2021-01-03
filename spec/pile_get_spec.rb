@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'auth/pile/get'
+require 'lambda/auth/pile/get'
 require 'json-schema'
 require 'lib/schema/pile_get'
 

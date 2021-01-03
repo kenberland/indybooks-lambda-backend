@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'auth/inventory/store/isbn/put'
+require 'lambda/auth/inventory/store/isbn/put'
 require 'json-schema'
 require 'lib/schema/purchase_post'
 

@@ -1,5 +1,5 @@
 load 'spec_helper.rb'
-require 'offers/index'
+require 'lambda/offers/index'
 
 RSpec.describe '#offers_index' do
   context 'lambda_result' do
