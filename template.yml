@@ -177,7 +177,7 @@ Resources:
         StoresAPI:
           Type: Api
           Properties:
-            Path: /auth/piles/{proxy+}
+            Path: /auth/pile/{proxy+}
             Method: POST
             Auth:
                Authorizer: MyCognitoAuth

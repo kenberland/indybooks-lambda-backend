@@ -109,7 +109,7 @@ get '/auth/my/piles' do
   auth_my_piles(event)
 end
 
-post '/auth/piles' do
+post '/auth/pile' do
   event = {
     'requestContext' => {
       'authorizer' => {
