@@ -6,7 +6,7 @@ def auth_my_stores_handler(event:, context:)
     "Access-Control-Allow-Origin" => "*",
     "Indybooks-git-commit-sha" => $my_git_commit_sha
   }
-  username = event['requestContext']['authorizer']['claims']["cognito:username"]
+  username = get_cognito_username(event)
   my_stores = {
     'stores': [$USER_STORES_MAP[username]]
   }

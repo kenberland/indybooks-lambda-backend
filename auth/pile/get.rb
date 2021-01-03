@@ -13,7 +13,7 @@ def auth_pile_handler(event:, context:)
 
   begin
     uuid = event['pathParameters']['proxy'].split('/')[0]
-    username = event['requestContext']['authorizer']['claims']["cognito:username"]
+    username = get_cognito_username(event)
     raise unless uuid.match(UUID_REGEX)
   rescue
     return { statusCode: BAD_REQUEST,

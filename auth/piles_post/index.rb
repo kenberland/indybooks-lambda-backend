@@ -20,7 +20,7 @@ def piles_post_handler(event:, context:)
   if status == OK
     payload = JSON.parse(payload, object_class: OpenStruct)
     payload.pile.uuid = uuid
-    payload.pile.username = event['requestContext']['authorizer']['claims']["cognito:username"]
+    payload.pile.username = get_cognito_username(event)
     ret_obj = $pile_manager.put(payload.pile)
     status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
   end
