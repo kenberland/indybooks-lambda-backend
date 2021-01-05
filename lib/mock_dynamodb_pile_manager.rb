@@ -15,6 +15,10 @@ class MockDynamodbPileManager
     }
   end
 
+  def delete(pile_uuid)
+    MockDynamoSeahorse.new(Aws::DynamoDB::Types::DeleteItemOutput.new)
+  end
+
   def put(p)
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end

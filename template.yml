@@ -25,7 +25,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_stores_production
-      Handler: stores/index.stores_handler
+      Handler: lambda/stores/get.stores_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -45,7 +45,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_inventory_production
-      Handler: offers/index.offers_handler
+      Handler: lambda/offers/get.offers_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -65,7 +65,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_purchases_production
-      Handler: purchases/index.purchases_handler
+      Handler: lambda/purchases/get.purchases_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -85,7 +85,7 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: indybooks_purchases_production
-      Handler: purchases_post/index.purchases_post_handler
+      Handler: lambda/purchases/post.purchases_post_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -103,7 +103,7 @@ Resources:
         Variables:
           INDY_ENV: production
       Policies:
-      Handler: auth/my/stores/index.auth_my_stores_handler
+      Handler: lambda/auth/my/stores/get.auth_my_stores_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -126,7 +126,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_inventory_production
-      Handler: auth/inventory/store/isbn/index.auth_inventory_store_isbn_handler
+      Handler: lambda/auth/inventory/store/isbn/get.auth_inventory_store_isbn_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -148,7 +148,7 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: indybooks_inventory_production
-      Handler: auth/inventory/store/isbn/put.auth_inventory_store_isbn_put_handler
+      Handler: lambda/auth/inventory/store/isbn/put.auth_inventory_store_isbn_put_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -172,7 +172,7 @@ Resources:
             TableName: indybooks_piles_production
         - DynamoDBWritePolicy:
             TableName: indybooks_user_piles_production
-      Handler: auth/piles_post/index.piles_post_handler
+      Handler: lambda/auth/pile/post.piles_post_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -194,7 +194,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: indybooks_piles_production
-      Handler: auth/pile/get.auth_pile_handler
+      Handler: lambda/auth/pile/get.auth_pile_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -216,7 +216,7 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: indybooks_piles_production
-      Handler: auth/pile/put.auth_pile_put_handler
+      Handler: lambda/auth/pile/put.auth_pile_put_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -225,6 +225,28 @@ Resources:
           Properties:
             Path: /auth/pile/{proxy+}
             Method: PUT
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthMyPileGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: indybooks_user_piles_production
+      Handler: lambda/auth/my/pile/get.auth_my_pile_get_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/my/pile
+            Method: GET
             Auth:
                Authorizer: MyCognitoAuth
             RestApiId:

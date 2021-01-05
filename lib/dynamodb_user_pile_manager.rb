@@ -50,8 +50,6 @@ class DynamodbUserPileManager
   end
 
   def add_pile_uuid(username, pile_uuid)
-    binding.pry;1
-
     params = {
       table_name: @table_name,
       key: {

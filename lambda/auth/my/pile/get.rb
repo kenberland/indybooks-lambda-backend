@@ -3,7 +3,7 @@ load 'git_commit_sha.rb'
 load 'lib/dynamo_client.rb'
 require 'lib/helpers'
 
-def auth_my_piles_get_handler(event:, context:)
+def auth_my_pile_get_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
@@ -15,13 +15,12 @@ def auth_my_piles_get_handler(event:, context:)
   unless user_pile.items.empty?
     status = OK
     ret = {
-      piles: user_pile.items.first
-  }
+      user_pile: user_pile.items.first
+    }
   else
     status = NOT_FOUND
     ret = {}
   end
-
   return { statusCode: status,
            headers: headers_list,
            body: ret.to_json

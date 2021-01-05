@@ -36,12 +36,10 @@ class DynamodbPileManager
   def create_table_impl
     @client.create_table({
                            key_schema: [
-                             { attribute_name: 'pile_uuid',  key_type: 'HASH' },
-                             { attribute_name: 'username', key_type: 'RANGE' },
+                             { attribute_name: 'pile_uuid',  key_type: 'HASH' }
                            ],
                            attribute_definitions: [
-                             { attribute_name: 'pile_uuid',    attribute_type: 'S' },
-                             { attribute_name: 'username',   attribute_type: 'S' },
+                             { attribute_name: 'pile_uuid',    attribute_type: 'S' }
                            ],
                            provisioned_throughput: {
                              read_capacity_units: 10,
@@ -49,6 +47,18 @@ class DynamodbPileManager
                            },
                            table_name: @table_name
                          })
+  end
+
+  def delete(pile_uuid)
+    params = {
+      table_name: @table_name,
+      key: {
+        pile_uuid: pile_uuid
+      },
+      return_consumed_capacity: "INDEXES",
+      return_item_collection_metrics: "SIZE"
+    }
+    client.delete_item(params)
   end
 
   def put(p)

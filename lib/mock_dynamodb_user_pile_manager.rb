@@ -28,12 +28,32 @@ class MockDynamodbUserPileManager
   end
 
   def get(username)
-    pile_uuids = Integer(rand*10) + 1
-    ret = { username: username }
-    ret.push({
-              "pile_uuids" => isbns.times.map {Integer(rand * 10**9).to_s },
-              "username" => 'indybooks'
-             })
-    MockDynamoResults.new(ret)
+    if username == 'indybooks'
+      n_piles = Integer(rand*10) + 1
+      ret = [{
+               username: username,
+               updated_at: Time.now.utc.iso8601,
+               created_at: Time.now.utc.iso8601,
+               pile_uuid_list: n_piles.times.map { SecureRandom.uuid }
+             }]
+    else
+      ret = {}
+    end
+      MockDynamoResults.new(ret)
   end
 end
+
+
+# {
+#   "piles": {
+#     "username": "indybooks",
+#     "pile_uuid_list": [
+#       "a027aabd-3318-4dd4-8fb4-8dc4d86c0dbf",
+#       "57223548-6cf8-4e21-a56a-441fab8df326",
+#       "28d393a9-bf34-46c1-9b6c-d534d0b535f2",
+#       "efbe66d9-e7ed-498c-baf5-40d0e4cdb8f3"
+#     ],
+#     "updated_at": "2021-01-05T03:12:53Z",
+#     "created_at": "2021-01-05T02:01:06Z"
+#   }
+# }

@@ -37,20 +37,23 @@ RSpec.describe '#pile_put' do
     let(:lambda_result) { auth_pile_put_handler(event: event, context: '') }
 
     describe 'for the put response' do
-      it 'returns a well-formed response for Lambda' do
-        expect(lambda_result.class).to eq Hash
-      end
+      it_behaves_like 'lambda function'
+    end
 
-      it 'has 3 keys' do
-        expect(lambda_result.keys.size).to eq 3
+    describe 'with a malformed uuid' do
+      let(:pile_uuid) { {
+                          'pathParameters' => {
+                            'proxy' =>  '123455'
+                          }
+                        }
+      }
+      it 'returns 400' do
+        expect(lambda_result[:statusCode]).
+          to eq 400
       end
-
-      it 'body is a string' do
-        expect(lambda_result[:body].class).to eq String
-      end
-
-      it 'body is a JSON string' do
-        expect(JSON.parse(lambda_result[:body]).class).to eq Hash
+      it 'returns no body' do
+        expect(lambda_result[:body]).
+          to eq '{}'
       end
     end
 
