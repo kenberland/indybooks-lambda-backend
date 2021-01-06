@@ -32,25 +32,13 @@ def auth_pile_put_handler(event:, context:)
     payload = JSON.parse(payload, object_class: OpenStruct)
     payload.pile.uuid = uuid
     payload.pile.username = get_cognito_username(event)
-
-    old_pile = $pile_manager.get(uuid)
-    unless username == old_pile.items.first["username"]
-      return { statusCode: FORBIDDEN,
-               headers: headers_list,
-               body: {}.to_json
-      }
-    end
     ret_obj = $pile_manager.put(payload.pile)
     status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
   end
 
-  ret = {
-    "status": status,
-  }
-
   return { statusCode: status,
            headers: headers_list,
-           body: ret.to_json
+           body: '{}'
   }
 
 end

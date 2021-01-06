@@ -62,12 +62,16 @@ RSpec.describe '#pile_put' do
         it 'it succeeds' do
           expect(lambda_result[:statusCode]).to eq 200
         end
+        it 'returns no body' do
+          expect(lambda_result[:body]).
+            to eq '{}'
+        end
       end
 
       describe 'for an attempt to update a pile owned by another user' do
         let(:username) { 'someotheruser' }
-        it 'it is unauthorized' do
-          expect(lambda_result[:statusCode]).to eq 403
+        it 'it succeeds' do
+          expect(lambda_result[:statusCode]).to eq 200
         end
       end
 
@@ -76,6 +80,10 @@ RSpec.describe '#pile_put' do
           let(:post_file) { 'spec/mocks/pile/missing-list.json' }
           it 'does not lint' do
             expect(lambda_result[:statusCode]).to eq 400
+          end
+          it 'returns no body' do
+            expect(lambda_result[:body]).
+              to eq '{}'
           end
         end
         describe 'with extra properties' do
