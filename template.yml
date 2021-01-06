@@ -251,5 +251,27 @@ Resources:
                Authorizer: MyCognitoAuth
             RestApiId:
               Ref: ApiGatewayApi
+  AuthMyPileDeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          INDY_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: indybooks_piles_production
+      Handler: lambda/auth/pile/delete.auth_pile_delete_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        StoresAPI:
+          Type: Api
+          Properties:
+            Path: /auth/pile/{proxy+}
+            Method: GET
+            Auth:
+               Authorizer: MyCognitoAuth
+            RestApiId:
+              Ref: ApiGatewayApi
 
 
