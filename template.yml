@@ -258,7 +258,7 @@ Resources:
         Variables:
           INDY_ENV: production
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: indybooks_piles_production
       Handler: lambda/auth/pile/delete.auth_pile_delete_handler
       Runtime: ruby2.7
