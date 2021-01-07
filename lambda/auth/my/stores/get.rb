@@ -1,5 +1,7 @@
 require 'json'
+load 'git_commit_sha.rb'
 require 'lib/user_stores_map'
+require 'lib/helpers'
 
 def auth_my_stores_handler(event:, context:)
   headers_list = {
