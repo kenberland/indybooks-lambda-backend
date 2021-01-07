@@ -8,3 +8,4 @@ $LOAD_PATH.unshift(root) unless $LOAD_PATH.include?(root)
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 require 'webmock/rspec'
+require 'pry'

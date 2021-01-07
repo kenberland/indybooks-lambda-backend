@@ -68,7 +68,7 @@ class DynamodbPileManager
         item: {
           'pile_uuid' => p.uuid,
           'username' => p.username,
-          'isbn_list' => p.isbn,
+          'book_list' => p.book_list,
           'created_at' => Time.now.utc.iso8601
         }
       }
